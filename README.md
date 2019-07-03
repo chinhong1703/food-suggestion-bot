@@ -2,6 +2,8 @@
 
 This is a Telegram chatbot that provides the user with a suggestion of food options from Singapore. 
 
+Try it out at [@food_suggestion_bot](https://t.me/food_suggestion_bot). It might have a short lag time when initially starting the bot because it is running on the free tier of Heroku.
+
 Main features are:
 - Food suggestion from a database of local food
 - Users can also add food into the database 
