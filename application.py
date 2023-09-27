@@ -82,7 +82,7 @@ async def button(update, context):
         '''view personal food suggestions'''
         resultsPersonalList = db.get_items(chat_id)
         if resultsPersonalList == []:
-            context.bot.send_message(chat_id, "You have not added any food yet.")
+            await context.bot.send_message(chat_id, "You have not added any food yet.")
             return
         resultsPersonal = ", ".join(resultsPersonalList).title()
         await context.bot.send_message(chat_id=update.effective_chat.id, text=
@@ -134,19 +134,19 @@ async def add_food(update, context):
         food = " ".join(context.args).lower()
         # check if food is already in the user's list
         if food == "":
-            update.message.reply_text('Usage: /add <food>')
+            await update.message.reply_text('Usage: /add <food>')
             logger.info("Empty keyword detected")
             return
         if food in food_db:
-            update.message.reply_text("Sorry the food is already in your suggestions list.")
+            await update.message.reply_text("Sorry the food is already in your suggestions list.")
             return
         # add food to user's list.
         db.add_item(food, chat_id)
-        update.message.reply_text('New food "{}" added succcessfully! '.format(food))
+        await update.message.reply_text('New food "{}" added succcessfully! '.format(food))
         logger.info("New food added: %s by user: %d" % (food, chat_id))
 
     except(IndexError, ValueError):
-        update.message.reply_text('Usage: /add <food>')
+        await update.message.reply_text('Usage: /add <food>')
         logger.info("Invalid keyword added")
 
 
@@ -155,7 +155,7 @@ async def log_food(update, context):
     chat_id = update.message.chat_id
     # check for improper usage
     if food == "":
-        update.message.reply_text('Usage: /log <food>')
+        await update.message.reply_text('Usage: /log <food>')
         logger.info("Empty keyword detected")
         return
     # add to log table
@@ -164,10 +164,10 @@ async def log_food(update, context):
     date_time_sql = now.strftime('%Y-%m-%d %H:%M:%S')
     db_log.add_item(food, chat_id, date_time_sql)
 
-    update.message.reply_text(text="Food logged successfully: %s at %s" % (food.title(), date_time))
+    await update.message.reply_text(text="Food logged successfully: %s at %s" % (food.title(), date_time))
     logger.info("Food logged: %s at %s by user: %d" % (food, date_time, chat_id))
     # pass to add food
-    add_food(update, context)
+    await add_food(update, context)
 
 
 async def del_food(update, context):
@@ -182,7 +182,7 @@ async def del_food(update, context):
         temp = [InlineKeyboardButton(food.title(), callback_data="d " + food)]
         keyboard.append(temp)
     reply_markup = InlineKeyboardMarkup(keyboard)
-    update.message.reply_text('Select food to be deleted:', reply_markup=reply_markup)
+    await update.message.reply_text('Select food to be deleted:', reply_markup=reply_markup)
     logger.info("/delete triggered by user: {}".format(chat_id))
 
 
