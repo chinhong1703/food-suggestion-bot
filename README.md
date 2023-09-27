@@ -49,6 +49,6 @@ And run application.py
 python application.py
 ```
 
-## Deployment
+## Deployment to Fly
 
-To deploy to heroku, you can follow the Heroku section from [this page](https://medium.com/python4you/creating-telegram-bot-and-deploying-it-on-heroku-471de1d96554)
+To deploy to fly, you can follow [this page](https://ambro.ar/2023/07/07/deploying-a-python-telegram-bot-with-fly-io/)
